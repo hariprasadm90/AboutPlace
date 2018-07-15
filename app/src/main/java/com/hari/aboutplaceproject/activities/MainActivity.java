@@ -104,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
                     mRecyclerViewAdapter = new MyRecyclerViewAdapter(getApplicationContext(), mDataList);
                     mRecyclerView.setAdapter(mRecyclerViewAdapter);
 
+                    mRecyclerViewAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.ClickListener() {
+                        @Override
+                        public void onItemClick(int position, View view) {
+                            Toast.makeText(MainActivity.this, "This item is at position :" + position, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

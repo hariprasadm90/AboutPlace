@@ -21,6 +21,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private Context mContext;
     private List<ListItem> mDataItems;
     private LayoutInflater mLayoutInflater;
+    private ClickListener mClickListener;
 
     public MyRecyclerViewAdapter(Context context, List<ListItem> dataItem) {
         this.mContext = context;
@@ -33,7 +34,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         mDataItems.clear();
         notifyDataSetChanged();
     }
-
+    public void setOnItemClickListener(ClickListener clickListener) {
+        this.mClickListener = clickListener;
+    }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,6 +86,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             description_text = (TextView) itemView.findViewById(R.id.description_text);
             display_image = (ImageView) itemView.findViewById(R.id.display_imageView);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mClickListener.onItemClick(getAdapterPosition(), v);
+                }
+            });
         }
     }
+    public interface ClickListener {
+
+        void onItemClick(int position, View view);
+    }
+
 }
