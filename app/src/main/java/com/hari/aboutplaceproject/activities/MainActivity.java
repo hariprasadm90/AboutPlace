@@ -1,6 +1,7 @@
 package com.hari.aboutplaceproject.activities;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        //Setting toolbar for Screen title
+        mToolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.toolbar_title_color));
+        mToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_bg_color));
+        //Setting toolbar as ActionBar for screen title
         setSupportActionBar(mToolBar);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -66,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // configure the refreshing colors
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.toolbar_bg_color,
+                android.R.color.holo_blue_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         parseDataThroughVolley();
@@ -82,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     //progress hide
                     mProgressBar.setVisibility(View.GONE);
-                    ListItem listItem;
                     JSONObject jsonObjectOne = new JSONObject(response);
                     String pageName = jsonObjectOne.getString("title");
+                    //setting toolbar title from Json data
                     mToolBar.setTitle(pageName);
                     JSONArray jsonArray = jsonObjectOne.getJSONArray("rows");
 
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         String description = jsonObjectTwo.getString("description");
                         String imageHref = jsonObjectTwo.getString("imageHref");
 
-                        listItem = new ListItem(title, description, imageHref);
+                        ListItem listItem = new ListItem(title, description, imageHref);
                         mDataList.add(listItem);
                     }
 
