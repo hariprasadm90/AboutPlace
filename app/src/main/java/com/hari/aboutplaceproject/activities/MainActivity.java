@@ -1,7 +1,7 @@
-package com.hari.aboutplaceproject;
+package com.hari.aboutplaceproject.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.hari.aboutplaceproject.R;
 import com.hari.aboutplaceproject.adapter.MyRecyclerViewAdapter;
 import com.hari.aboutplaceproject.model.ListItem;
 
@@ -43,9 +44,8 @@ public class MainActivity extends AppCompatActivity {
         //Setting up layoutmanager for Recyclerview to form List that scrolls vertically
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        // Remember to CLEAR OUT old items before appending in the new ones
         mRecyclerView.setLayoutManager(linearLayoutManager);
-
+        parseDataThroughVolley();
     }
 
     private void parseDataThroughVolley() {

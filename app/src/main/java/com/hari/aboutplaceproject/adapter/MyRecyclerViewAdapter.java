@@ -2,6 +2,7 @@ package com.hari.aboutplaceproject.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.hari.aboutplaceproject.R;
 import com.hari.aboutplaceproject.model.ListItem;
+import com.hari.aboutplaceproject.utils.GlideApp;
 
 import java.util.List;
 
@@ -38,7 +40,24 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         //getting position of each list item in the arraylist
         ListItem listItem = mDataItems.get(position);
-   }
+
+        //checking for null values in title
+        if (listItem.getTitle().equals("null")) {
+            holder.title_text.setText(mContext.getResources().getString(R.string.no_title));
+        } else {
+            //setting the title data to view
+            holder.title_text.setText(listItem.getTitle());
+        }
+        //checking for null values in description
+        if (listItem.getDescription().equals("null")) {
+            holder.description_text.setText(mContext.getResources().getString(R.string.no_description));
+        } else {
+            //setting the description data to view
+            holder.description_text.setText(listItem.getDescription());
+        }
+        //setting the image url data to view(lazy loading) using glide image loading library
+        GlideApp.with(mContext).load(listItem.getImageHref()).placeholder(ContextCompat.getDrawable(mContext, R.drawable.no_image)).into(holder.display_image);
+    }
 
     @Override
     public int getItemCount() {
