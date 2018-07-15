@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private MyRecyclerViewAdapter mRecyclerViewAdapter;
     private List<ListItem> mDataList = new ArrayList<>();
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         //Setting toolbar for Screen title
         setSupportActionBar(mToolBar);
 
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         //Setting up layoutmanager for Recyclerview to form List that scrolls vertically
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -55,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    //dismiss
+                    //progress hide
+                    mProgressBar.setVisibility(View.GONE);
                     ListItem listItem;
                     JSONObject jsonObjectOne = new JSONObject(response);
                     String pageName = jsonObjectOne.getString("title");
@@ -82,10 +87,14 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                //progress hide
+                mProgressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Response Error is : " + error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
+        //progress start
+        mProgressBar.setVisibility(View.VISIBLE);
         //Volley request
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         //adding the stringRequest to the RequestQueue of Volley
