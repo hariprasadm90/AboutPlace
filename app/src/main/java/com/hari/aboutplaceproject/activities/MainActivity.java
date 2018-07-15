@@ -42,15 +42,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        mToolBar = findViewById(R.id.toolbar);
         mToolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.toolbar_title_color));
         mToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_bg_color));
         //Setting toolbar as ActionBar for screen title
         setSupportActionBar(mToolBar);
 
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mProgressBar = findViewById(R.id.progressBar);
+        mSwipeRefreshLayout = findViewById(R.id.swipe_container);
+        mRecyclerView = findViewById(R.id.recyclerView);
         //Setting up layoutmanager for RecyclerView to form List that scrolls vertically
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

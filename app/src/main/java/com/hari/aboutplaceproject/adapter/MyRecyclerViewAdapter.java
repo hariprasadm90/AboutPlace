@@ -65,7 +65,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             holder.description_text.setText(listItem.getDescription());
         }
         //setting the image url data to view(lazy loading) using glide image loading library
-        GlideApp.with(mContext).load(listItem.getImageHref()).placeholder(ContextCompat.getDrawable(mContext, R.drawable.no_image)).into(holder.display_image);
+        GlideApp.with(mContext).load(listItem.getImageHref()).placeholder(ContextCompat.getDrawable(mContext, R.drawable.no_image)).override(mContext.getResources().getInteger(R.integer.image_size)).into(holder.display_image);
     }
 
     @Override
@@ -82,9 +82,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            title_text = (TextView) itemView.findViewById(R.id.title_text);
-            description_text = (TextView) itemView.findViewById(R.id.description_text);
-            display_image = (ImageView) itemView.findViewById(R.id.display_imageView);
+            title_text = itemView.findViewById(R.id.title_text);
+            description_text = itemView.findViewById(R.id.description_text);
+            display_image = itemView.findViewById(R.id.display_imageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
