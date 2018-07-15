@@ -1,6 +1,7 @@
 package com.hari.aboutplaceproject.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private MyRecyclerViewAdapter mRecyclerViewAdapter;
     private List<ListItem> mDataList = new ArrayList<>();
     private ProgressBar mProgressBar;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,30 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        //Setting up layoutmanager for Recyclerview to form List that scrolls vertically
+        //Setting up layoutmanager for RecyclerView to form List that scrolls vertically
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        // Setup refresh listener which triggers new data loading
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                // clear old items before appending in the new ones
+                mRecyclerViewAdapter.clear();
+                parseDataThroughVolley();
+                // now we call setRefreshing(false) to signal refresh has finished
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+        // configure the refreshing colors
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         parseDataThroughVolley();
     }
 

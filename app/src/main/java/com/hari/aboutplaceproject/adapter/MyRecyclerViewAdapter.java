@@ -28,6 +28,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
+    // Clean all elements of the recyclerview
+    public void clear() {
+        mDataItems.clear();
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
